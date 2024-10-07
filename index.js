@@ -45,6 +45,7 @@ const main = async () => {
 
     const url = `https://www.mtgcardsgames.com.br/ajax/ecom/carrinho.php?t=1&id=${storeCardId}&q=1`;
 
+    // Requisição que adiciona a carta ao carrinho
     response = await axios.get(url, {
         "credentials": "include",
         "headers": {
