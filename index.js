@@ -1,4 +1,3 @@
-// https://www.mtgcardsgames.com.br/?view=ecom%2Fitens&id=15760&searchExactMatch=1&busca=anel+solar
 import axios from "axios";
 import { load } from "cheerio";
 import fs from 'fs/promises';
@@ -10,6 +9,7 @@ const main = async () => {
 
     cardToSearch.replace(' ', '+');
 
+    // Requisição que retorna a página com o estoque disponível
     let response = await axios.get(`https://www.mtgcardsgames.com.br/?view=ecom%2Fitens&id=15760&searchExactMatch=1&busca=${cardToSearch}`, {
         "credentials": "include",
         "headers": {
@@ -27,6 +27,7 @@ const main = async () => {
         "mode": "cors"
     });
 
+    // Escreve arquivo HTML para verificar
     await fs.writeFile(`./teste.html`, response.data, (err) => {
         if (err) {
             console.error('Error while saving file:', err);
@@ -37,8 +38,6 @@ const main = async () => {
     let $ = load(response.data);
 
     const $rowCard = $('.table-cards-row').first();
-
-    console.log($rowCard.html())
 
     const onClickProperty = $rowCard.find('.add_prod li').first().attr('onclick');
 
